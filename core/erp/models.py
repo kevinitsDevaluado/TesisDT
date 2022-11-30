@@ -179,3 +179,65 @@ class GameFootball(models.Model):
         verbose_name = 'Partido de Futbol'
         verbose_name_plural = 'Partidos de Futbol'
         ordering = ['-id']
+
+
+class Training(models.Model):
+    desc = models.CharField(max_length=150, verbose_name='Descripción')
+    date = models.DateField(default=datetime.now, verbose_name='Fecha del Entrenamiento')
+    state = models.BooleanField(default=True, verbose_name='Estado')
+
+    def __str__(self):
+        return self.desc
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['date'] = self.creada_en.strftime('%Y-%m-%d')
+        return item
+
+    class Meta:
+        verbose_name = 'Entrenamiento'
+        verbose_name_plural = 'Entrenamientos'
+        ordering = ['-id']
+
+
+class TrainingAssistance(models.Model):
+    asistencia = models.BooleanField(default=False, verbose_name='Asistencia')
+    creada_en = models.DateField(default=datetime.now, verbose_name='Fecha del Entrenamiento')
+    referee = models.ForeignKey(Referee, on_delete=models.CASCADE,related_name='refereeAssistance')
+    training = models.ForeignKey(Training, on_delete=models.CASCADE,related_name='training')
+    state = models.BooleanField(default=True, verbose_name='Estado')
+
+    def __str__(self):
+        return self.name
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['referee'] = {} if self.referee is None else self.referee.toJSON()
+        item['training'] = {} if self.training is None else self.training.toJSON()
+        item['creada_en'] = self.creada_en.strftime('%Y-%m-%d')
+        return item
+
+    class Meta:
+        verbose_name = 'Asistencia de Entrenamiento'
+        verbose_name_plural = 'Asistencias de Entrenamientos'
+        ordering = ['-id']
+
+class Quote(models.Model):
+    desc = models.CharField(max_length=150, verbose_name='Descripción')
+    price = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+    date = models.DateField(default=datetime.now, verbose_name='Fecha del Entrenamiento')
+    state = models.BooleanField(default=True, verbose_name='Estado')
+
+    def __str__(self):
+        return self.desc
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['price'] = format(self.price, '.2f')
+        return item
+
+    class Meta:
+        verbose_name = 'Cuota'
+        verbose_name_plural = 'Cuotas'
+        ordering = ['-id']
+

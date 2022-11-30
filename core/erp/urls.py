@@ -2,6 +2,7 @@ from django.urls import path
 
 from core.erp.views.ProfileLeague.views import *
 from core.erp.views.Referee.views import *
+from core.erp.views.Training.views import *
 urlpatterns = [
     path('profile/<int:pk>/', ProfileListView.as_view(), name='profile'),
 
@@ -18,4 +19,10 @@ urlpatterns = [
     path('Stadium/delete/<int:id>/', StadiumDeleteView, name='stadium_delete'),
     path('Stadium/update/<int:id>/', updateStadium, name='stadium_update'),
 
+
+    # Entrenamientos
+    path('Training/', TrainingListView.as_view(), name='training_list'),
+    path('Training/add/', TrainingCreateView.as_view(), name='training_create'),
+    path('Training/update/<int:pk>/', TrainingUpdateView.as_view(), name='training_update'),
+    path('Training/delete/<int:pk>/', TrainingDeleteView.as_view(), name='training_delete'),
 ]
