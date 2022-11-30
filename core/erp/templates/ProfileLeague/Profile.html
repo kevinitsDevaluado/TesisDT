@@ -1,0 +1,166 @@
+{% extends 'skin.html' %} 
+{% load static %} 
+{% load widget_tweaks %} 
+{% load security_extras %} {% block head %}
+  {% include 'librays.html' %} 
+  <script src="{% static 'lib/highcharts-9.1.1/highcharts.js' %}"></script>
+  <script src="{% static 'lib/highcharts-9.1.1/modules/exporting.js' %}"></script>
+  <script src="{% static 'lib/highcharts-9.1.1/modules/export-data.js' %}"></script>
+  <script src="{% static 'lib/highcharts-9.1.1/modules/accessibility.js' %}"></script>
+  <script src="{% static 'TeamSoccer/js/form.js' %}"></script>
+  <script src="{% static 'TeamSoccer/js/list.js' %}"></script>
+  <script src="{% static 'TeamSoccer/js/edit.js' %}"></script>
+  <script src="{% static 'Stadium/js/form.js' %}"></script>
+  <script src="{% static 'Stadium/js/list.js' %}"></script>
+  <script src="{% static 'Game/js/form.js' %}"></script>
+  <script src="{% static 'Game/js/list.js' %}"></script>
+  <script src="{% static 'SportLeague/js/edit.js' %}"></script>
+
+  {% endblock %} 
+{% block breadcrumb %} 
+{% endblock %} 
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  {% if getProfileLegue.image %}
+                    <img
+                      class="profile-user-img img-fluid img-circle"
+                      src=" {{ getProfileLegue.image.url }} "
+                      alt="User profile picture"
+                    />
+                  {% endif %}
+                </div>
+                <h3 class="profile-username text-center"> {{ getProfileLegue.name }}  </h3>
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b>Equipos Asociados</b> <a class="float-right">1,322</a>
+                  </li>
+                </ul>
+                <p><strong>Descripción: </strong></p>
+                <p class="text-center"> {{ getProfileLegue.desc }} </p>
+                <a 
+                  id="modalActivate" type="button"
+                  data-toggle="modal" data-target="#exampleModalPreview-editLiga"
+                  data-toggle="tooltip"
+                  title="Editar registro"
+                  class="btn btn-warning btn-block"><b>Editar</b></a>
+                <a href="{% url 'profileLeague_delete' getProfileLegue.id %}" class="btn btn-danger btn-block"><b>Eliminar</b></a>
+                <a href=" {% url 'dashboard' %} " class="btn btn-primary btn-block"><b>Regresar Inicio</b></a>
+              </div>
+            </div>
+            {% include 'SportLeague/edit.html' %}
+          </div>
+  
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#team" data-toggle="tab"
+                      >Equipos Asociados</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#stadium" data-toggle="tab"
+                      >Estadios</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " href="#game" data-toggle="tab"
+                      >Partidos</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="tab-pane active" id="team">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="row">
+                          <div class="col-md-6"><i class="fas fa-futbol"></i> Equipos</div>
+                          <div class="col-md-6">
+                            <a
+                                id="modalActivate" type="button"
+                                data-toggle="modal" data-target="#exampleModalPreview-createTeam"
+                                data-toggle="tooltip"
+                                title="Editar registro"
+                                class="btn btn-success float-right">
+                                Crear Equipo <i class="fas fa-edit"></i>
+                            </a>
+                          </div>
+                          {% include 'TeamSoccer/createModal.html' %}
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        {% include 'TeamSoccer/listSoccer.html' %}
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="tab-pane" id="stadium">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="row">
+                          <div class="col-md-6"><i class="fas fa-futbol"></i> Estadios </div>
+                          <div class="col-md-6">
+                            <a
+                                id="modalActivate" type="button"
+                                data-toggle="modal" data-target="#exampleModalPreview-createStadium"
+                                data-toggle="tooltip"
+                                title="Editar registro"
+                                class="btn btn-success float-right">
+                                Crear Estadio <i class="fas fa-edit"></i>
+                            </a>
+                          </div>
+                          {% include 'Stadium/createModal.html' %}
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        {% include 'Stadium/listSoccer.html' %}
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="tab-pane " id="game">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="row">
+                          <div class="col-md-6"><i class="fas fa-futbol"></i> Encuentros Deportivos </div>
+                          <div class="col-md-6">
+                            <a
+                                id="modalActivate" type="button"
+                                data-toggle="modal" data-target="#exampleModalPreview-createGame"
+                                data-toggle="tooltip"
+                                title="Editar registro"
+                                class="btn btn-success float-right">
+                                Crear Encuentro <i class="fas fa-edit"></i>
+                            </a>
+                          </div>
+                          {% include 'Game/createModal.html' %}
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        {% include 'Game/listSoccer.html' %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<!-- MODALES  -->
+{% endblock %}

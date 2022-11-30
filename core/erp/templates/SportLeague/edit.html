@@ -1,0 +1,35 @@
+{% load static %}
+{% load widget_tweaks %}
+<!-- Modal Crear Liga -->
+<div class="modal fade right" id="exampleModalPreview-editLiga" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog momodel modal-fluid" role="document">
+        <div class="modal-content modal-content ">
+            <div class=" modal-header   modal-header text-center">
+                <h5 class="modal-title w-100" id="exampleModalPreviewLabel"> Editar Información </h5>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                    <span style="font-size: 1.3em;" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" method="post" enctype="multipart/form-data" id="frmFormSportLeagueEdit">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="row">
+                        
+                        {% for field in formEdit.visible_fields %}
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{ field.label }}:</label>
+                                {{ field|add_class:'form-control select2'|attr:'autocomplete:off' }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-header">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Aceptar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

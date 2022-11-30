@@ -1,0 +1,446 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>{{ title }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Favicons -->
+  <link href="{{ mainpage.get_icon_image }}" rel="icon">
+  <link href="{{ mainpage.get_icon_image }}" rel="apple-touch-icon">
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'mainpage/index/fonts/icomoon/style.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mainpage/index/css/bootstrap/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'mainpage/index/css/jquery-ui.css' %}">
+  <link rel="stylesheet" href="{% static 'mainpage/index/css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'mainpage/index/css/owl.theme.default.min.css' %}">
+  <link rel="stylesheet" href="{% static 'mainpage/index/css/owl.theme.default.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mainpage/index/css/jquery.fancybox.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mainpage/index/css/bootstrap-datepicker.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mainpage/index/fonts/flaticon/font/flaticon.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mainpage/index/css/aos.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mainpage/index/css/style.css' %}">
+
+
+
+</head>
+
+<body>
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+    <header class="site-navbar py-4" role="banner">
+
+      <div class="container">
+        <div class="d-flex align-items-center">
+          <div class="site-logo">
+            <a href="{% url 'index' %}">
+              <img src="{{ mainpage.get_icon_image }}" class="img-fluid" width="140px" alt="Logo">
+            </a>
+          </div>
+          <div class="ml-auto">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li class="active"><a href="{% url 'index' %}" class="nav-link">Inicio</a></li>
+                <li><a href="{% if onepage %}#gallery{% else %}/#gallery{% endif %}" class="nav-link">Galería</a></li>
+                <li><a href="{% if onepage %}#news{% else %}/#news{% endif %}" class="nav-link">Noticias</a></li>
+                <li><a href="{% if onepage %}#contact{% else %}/#contact{% endif %}" class="nav-link">Contactos</a></li>
+              </ul>
+            </nav>
+
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
+                class="icon-menu h3 text-white"></span></a>
+          </div>
+        </div>
+      </div>
+
+    </header>
+
+    <div class="hero overlay" style="background-image: url('{% static 'mainpage/index/images/bg_3.jpg' %}');">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-5 ml-auto">
+            <h1 class="text-white">{{ mainpage.name }}</h1>
+            <p>{{ mainpage.desc }}</p>
+            <p>
+              {% if request.user.is_superuser %}
+                  <a href="{% url 'dashboard' %}" class="py-3 px-4 mr-3" style="background:#F5A93C!important;color:azure"> <strong>Bienvenido {{ request.user.get_short_name }}</strong></a>
+              {% else %}
+                  <a href="{% url 'login' %}" class="py-3 px-4 mr-3" style="background:#F5A93C!important; color:azure"> <strong>Iniciar sesión</strong> </a>
+              {% endif %}
+            </p>  
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    
+    <div class="container">
+      
+
+      <div class="row">
+        <div class="col-lg-12">
+          
+          <div class="d-flex team-vs">
+            <span class="score">4-1</span>
+            <div class="team-1 w-50">
+              <div class="team-details w-100 text-center">
+                <img src="{% static 'mainpage/index/images/logo_1.png' %}" alt="Image" class="img-fluid">
+                <h3>LA LEGA <span>(win)</span></h3>
+                <ul class="list-unstyled">
+                  <li>Anja Landry (7)</li>
+                  <li>Eadie Salinas (12)</li>
+                  <li>Ashton Allen (10)</li>
+                  <li>Baxter Metcalfe (5)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="team-2 w-50">
+              <div class="team-details w-100 text-center">
+                <img src="{% static 'mainpage/index/images/logo_2.png' %}" alt="Image" class="img-fluid">
+                <h3>JUVENDU <span>(loss)</span></h3>
+                <ul class="list-unstyled">
+                  <li>Macauly Green (3)</li>
+                  <li>Arham Stark (8)</li>
+                  <li>Stephan Murillo (9)</li>
+                  <li>Ned Ritter (5)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="latest-news" id="gallery">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 title-section">
+            <h2 class="heading">Galería</h2>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          {% for g in gallery  %}
+          <div class="col-md-4">
+            <div class="post-entry">
+              <a href="#">
+                <img src="{{ g.get_image }}" alt="Image" class="img-fluid">
+              </a>
+              <div class="caption">
+                <div class="caption-inner">
+                  <h3 class="mb-3">  </h3>
+                  <div class="author d-flex align-items-center">
+                    <div class="img mb-2 mr-3">
+                     <!-- <img src="{{ g.get_image }}" alt="">-->
+                    </div>
+                    <div class="text">
+                      <h4>{{ g.name }}</h4>
+                      <span>{{ g.date_joined }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+    
+    <div class="site-section bg-dark">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="widget-next-match">
+              <div class="widget-title">
+                <h3>Partidos</h3>
+              </div>
+              <div class="widget-body mb-3">
+                <div class="widget-vs">
+                  <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                    <div class="team-1 text-center">
+                      <img src="{% static 'mainpage/index/images/logo_1.png' %}" alt="Image">
+                      <h3>Equipos</h3>
+                    </div>
+                    <div>
+                      <span class="vs"><span>VS</span></span>
+                    </div>
+                    <div class="team-2 text-center">
+                      <img src="{% static 'mainpage/index/images/logo_2.png' %}" alt="Image">
+                      <h3>Soccer</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center widget-vs-contents mb-4">
+                <h4>World Cup League</h4>
+                <p class="mb-5">
+                  <span class="d-block">December 20th, 2020</span>
+                  <span class="d-block">9:30 AM GMT+0</span>
+                  <strong class="text-primary">New Euro Arena</strong>
+                </p>
+
+                <div id="date-countdown2" class="pb-1"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            
+            <div class="widget-next-match">
+              <table class="table custom-table">
+                <thead>
+                  <tr>
+                    <th>P</th>
+                    <th>Team</th>
+                    <th>W</th>
+                    <th>D</th>
+                    <th>L</th>
+                    <th>PTS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td><strong class="text-white">Football League</strong></td>
+                    <td>22</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>140</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td><strong class="text-white">Soccer</strong></td>
+                    <td>22</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>140</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td><strong class="text-white">Juvendo</strong></td>
+                    <td>22</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>140</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td><strong class="text-white">French Football League</strong></td>
+                    <td>22</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>140</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td><strong class="text-white">Legia Abante</strong></td>
+                    <td>22</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>140</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td><strong class="text-white">Gliwice League</strong></td>
+                    <td>22</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>140</td>
+                  </tr>
+                  <tr>
+                    <td>7</td>
+                    <td><strong class="text-white">Cornika</strong></td>
+                    <td>22</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>140</td>
+                  </tr>
+                  <tr>
+                    <td>8</td>
+                    <td><strong class="text-white">Gravity Smash</strong></td>
+                    <td>22</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>140</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div> 
+
+    <!--Section in the News-->
+    <div class="site-section" id="news">
+      <div class="container">
+        <div class="row">
+          <div class="col-6 title-section">
+            <h2 class="heading">Noticias</h2>
+          </div>
+          <div class="col-6 text-right">
+            <div class="custom-nav">
+            <a href="#" class="js-custom-prev-v2"><span class="icon-keyboard_arrow_left"></span></a>
+            <span></span>
+            <a href="#" class="js-custom-next-v2"><span class="icon-keyboard_arrow_right"></span></a>
+            </div>
+          </div>
+        </div>
+        <div class="owl-4-slider owl-carousel">
+          {% for i in News %}
+          <div class="item">
+            <div class="video-media">
+              <img src="{{ i.get_image }}" alt="Image" class="img-fluid">
+              <a href=" {{ i.url }} " class="d-flex play-button align-items-center" data-fancybox>
+                <span class="icon mr-3">
+                  <span class="icon-play"></span>
+                </span>
+                <div class="caption">
+                  <h3 class="m-0"> {{ i.title }} </h3>
+                </div>
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <!--Section END the News-->
+    
+    <!-- Section Contact-->
+    <div class="site-section" id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 title-section">
+            <h2 class="heading">Contactos</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-7">
+            <form action="{% url 'index' %}" id="frmComments" method="post" class="">
+              {% for field in form.visible_fields %}
+                  <div class="form-group">
+                      <label><b>{{ field.label }}:</b></label>
+                      {{ field }}
+                  </div>
+              {% endfor %}
+              <div class="text-center">
+                  <button class="btn btn-primary btnSendCommets" type="submit"><i
+                          class="fas fa-envelope"></i>
+                      Enviar comentario
+                  </button>
+              </div>
+          </form> 
+          </div>
+          <div class="col-lg-4 ml-auto">
+            
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <strong class="text-white d-block">Dirección: </strong>
+                {{ mainpage.address }} 
+              </li>
+              <li class="mb-2">
+                <strong class="text-white d-block">Email: </strong>
+                <a href="mailto:{{ mainpage.email }}">{{ mainpage.email }}</a>
+              </li>
+              <li class="mb-2">
+                <strong class="text-white d-block">
+                  Teléfono: 
+                </strong>
+                <a href="https://wa.me/593{{ mainpage.mobile }}" title="Para cualquier pregunta puedes contactarme !!" target="_blank">{{ mainpage.phone }} /  +593{{ mainpage.mobile }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end Section Contact-->
+
+
+    <footer class="footer-section">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-md-12">
+            <div class=" pt-5">
+              <p>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;
+                <script>
+                  document.write(new Date().getFullYear());
+                </script> Todos los derechos reservados por <a href="#" target="_blank">KevINTS DeValuado</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </footer>
+
+
+
+  </div>
+  <!-- .site-wrap -->
+
+  <script src="{% static 'mainpage/index/js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/jquery-migrate-3.0.1.min.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/jquery-ui.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/popper.min.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/jquery.stellar.min.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/jquery.countdown.min.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/bootstrap-datepicker.min.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/aos.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/jquery.fancybox.min.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/jquery.sticky.js' %}"></script>
+  <script src="{% static 'mainpage/index/js/jquery.mb.YTPlayer.min.js' %}"></script>
+
+
+  <script src="{% static 'mainpage/index/js/main.js' %}"></script>
+
+  <!--Formvalidation-->
+  <link rel="stylesheet" href="{% static 'lib/formvalidation-1.8.0/css/formValidation.min.css' %}">
+  <script src="{% static 'lib/formvalidation-1.8.0/es6-shim.min.js' %}"></script>
+  <script src="{% static 'lib/formvalidation-1.8.0/js/FormValidation.min.js' %}"></script>
+  <script src="{% static 'lib/formvalidation-1.8.0/js/plugins/Bootstrap.min.js' %}"></script>
+  <script src="{% static 'lib/formvalidation-1.8.0/js/locales/es_ES.min.js' %}"></script>
+  <!-- Jquery-Confirm-->
+  <script src="{% static 'lib/jquery-confirm-3.3.4/jquery-confirm.min.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'lib/jquery-confirm-3.3.4/jquery-confirm.min.css' %}"/>
+  <!-- Sweetalert2-->
+  <script src="{% static 'lib/sweetalert2-11.0.16/sweetalert2.all.min.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'lib/sweetalert2-11.0.16/sweetalert2.min.css' %}"/>
+  <script src="{% static 'mainpage/js/main.js' %}"></script>
+  <!-- Send Comments-->
+  <script src="{% static 'js/functions.js' %}"></script>
+  <script src="{% static 'mainpage/js/sendcomments.js' %}"></script>
+
+</body>
+
+</html>
