@@ -50,8 +50,14 @@ class DashboardView(LoginRequiredMixin, TemplateView):
                         #messages.info(request, 'Máquina registrada correctamente')
             elif action == 'listSportLeague':
                 data = []
-                for i in SportLeague.objects.filter(state= True).order_by('id'):
-                    data.append(i.toJSON())   
+                user = User.objects.get(id=self.request.user.id)
+                if Client.objects.filter(user_id=user.id).exists():
+                    id_client= Client.objects.get(user_id=user.id)
+                    for i in SportLeague.objects.filter(state= True,client_id = id_client).order_by('id'):
+                        data.append(i.toJSON()) 
+                else:
+                    for i in SportLeague.objects.filter(state= True).order_by('id'):
+                        data.append(i.toJSON())   
             elif action == 'validate_data':
                 return self.validate_data()
             else:

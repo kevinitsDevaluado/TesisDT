@@ -90,15 +90,10 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
 $(function () {
 
-    $('.select2').select2({
-        placeholder: 'Buscar..',
-        language: 'es',
-        theme: 'bootstrap4'
-    });
+   
 
     $('select[name="estudiante"]').on('change', function (e) {
         fvSportLeague.revalidateField('estudiante');
     });
 
-    console.log("Ingresando a formulario");
 });

@@ -1,14 +1,12 @@
-var TeamEditSoccer;
-
-document.addEventListener('DOMContentLoaded', function (event) {
-    const form = document.getElementById('frmEditTeamEditSoccer');
-    TeamEditSoccer = FormValidation.formValidation(form, {
+var formCuota;
+document.addEventListener('DOMContentLoaded', function (e) {
+    const form = document.getElementById('frmAddPagoCuota');
+    formCuota = FormValidation.formValidation(form, {
             locale: 'es_ES',
             localization: FormValidation.locales.es_ES,
             plugins: {
                 trigger: new FormValidation.plugins.Trigger(),
                 submitButton: new FormValidation.plugins.SubmitButton(),
-                // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                 bootstrap: new FormValidation.plugins.Bootstrap(),
                 icon: new FormValidation.plugins.Icon({
                     valid: 'fa fa-check',
@@ -17,16 +15,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
                 }),
             },
             fields: {
-                nameSoccer_edit: {
+                id_price_cuota: {
                     validators: {
-                        notEmpty: {
-                            message: 'Ingrese un Nombre'
+                        notEmpty: {},
+                        stringLength: {
+                            min: 2,
                         },
-                        
                     }
                 },
-            }
-            
+            },
         }
     )
         .on('core.element.validated', function (e) {
@@ -41,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
                     'is-valid': false,
                 });
             }
-            const iconPlugin = TeamEditSoccer.getPlugin('icon');
+            const iconPlugin = fv.getPlugin('icon');
             const iconElement = iconPlugin && iconPlugin.icons.has(e.element) ? iconPlugin.icons.get(e.element) : null;
             iconElement && (iconElement.style.display = 'none');
         })
@@ -55,25 +52,22 @@ document.addEventListener('DOMContentLoaded', function (event) {
             }
         })
         .on('core.form.valid', function () {
-            var parameters = new FormData(TeamEditSoccer.form);
-            parameters.append('action', 'editSoccerTeam');
-            let urlrefresh = TeamEditSoccer.form.getAttribute('data-url');
+            var parameters = new FormData(formCuota.form);
+            parameters.append('action', 'add_cuotapago');
+            let urlrefresh = formCuota.form.getAttribute('data-url');
             submit_formdata_with_ajax('Notificación',
                 '¿Estas seguro de realizar la siguiente acción?',
                 pathname,
                 parameters,
                 function (request) {
                    //location.href = urlrefresh;
-                   var idTeam = $("#id_SoccerTeam").val();
-                   //console.log(idTeam);
-                   $("#exampleModalPreview-editTeam"+idTeam).modal('hide');
-                   limpiarSoccer();
-                   getDataTeamEditSoccer();
+                   location.reload();
                 },
             );
         });
 });
 
 $(function () {
-    console.log("Ingresando a formulario TeamEditSoccer");
+
 });
+

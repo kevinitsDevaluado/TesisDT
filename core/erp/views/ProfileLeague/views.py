@@ -91,7 +91,6 @@ class ProfileListView(LoginRequiredMixin, CreateView):
                 for i in Team.objects.filter(name__icontains=term, sportLeague_id = self.kwargs['pk']):
                     item = {'id': i.id, 'text': i.__str__(), 'data': i.toJSON()}
                     data.append(item)
-                print("Ingresando a select team")
             elif action == 'search_stadium':
                 data = []
                 term = request.POST['term']
@@ -110,6 +109,7 @@ class ProfileListView(LoginRequiredMixin, CreateView):
         context = super().get_context_data()
         query = SportLeague.objects.get(id=self.kwargs['pk'])
         context['getProfileLegue'] = SportLeague.objects.get(id=self.kwargs['pk'])
+        context['getProfileLegueCount'] = Team.objects.filter(id=self.kwargs['pk']).count()
         context['formTeam'] = TeamLeagueForm()
         context['formStadium'] = StadiumForm()
         context['formLeague'] = SportLeagueForm()
@@ -144,6 +144,19 @@ class ProfileLeagueDeleteView(DeleteView):
         context['entity'] = 'Liga'
         return context
         
+
+def TeamDeleteView(request,id):
+    id_id = id
+    team = Team.objects.get(id = id_id)
+    team.delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def DetailsGamesDeleteView(request,id):
+    id_id = id
+    team = GameFootball.objects.get(id = id_id)
+    team.delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def TeamDeleteView(request,id):
     id_id = id

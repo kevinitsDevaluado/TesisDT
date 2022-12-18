@@ -198,7 +198,7 @@ SESSION_COOKIE_NAME = 'pegasus'
 
 GROUPS = {
     'Referee': 2,
-    'employee': 3,
+    'Client': 3,
 }
 
 KEYGOOGLEMAPS = 'AIzaSyA2OWxgiMT5wUl_8fBhVp7jvKmUJR9EZiE'

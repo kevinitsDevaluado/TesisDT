@@ -113,8 +113,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
                 function (request) {
                    //location.href = urlrefresh;
                    $("#exampleModalPreview-createGame").modal('hide');
-                   limpiarGame();
-                   getDataGame();
+                   getDataGameGame();
                 },
             );
         });

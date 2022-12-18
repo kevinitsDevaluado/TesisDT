@@ -1,8 +1,8 @@
-var TeamEditSoccer;
+var fvAsistencia;
 
 document.addEventListener('DOMContentLoaded', function (event) {
-    const form = document.getElementById('frmEditTeamEditSoccer');
-    TeamEditSoccer = FormValidation.formValidation(form, {
+    const form = document.getElementById('frmAddAsistencia');
+    fvAsistencia = FormValidation.formValidation(form, {
             locale: 'es_ES',
             localization: FormValidation.locales.es_ES,
             plugins: {
@@ -16,17 +16,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
                     validating: 'fa fa-refresh',
                 }),
             },
-            fields: {
-                nameSoccer_edit: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Ingrese un Nombre'
-                        },
-                        
-                    }
-                },
-            }
-            
         }
     )
         .on('core.element.validated', function (e) {
@@ -41,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
                     'is-valid': false,
                 });
             }
-            const iconPlugin = TeamEditSoccer.getPlugin('icon');
+            const iconPlugin = fvAsistencia.getPlugin('icon');
             const iconElement = iconPlugin && iconPlugin.icons.has(e.element) ? iconPlugin.icons.get(e.element) : null;
             iconElement && (iconElement.style.display = 'none');
         })
@@ -55,25 +44,20 @@ document.addEventListener('DOMContentLoaded', function (event) {
             }
         })
         .on('core.form.valid', function () {
-            var parameters = new FormData(TeamEditSoccer.form);
-            parameters.append('action', 'editSoccerTeam');
-            let urlrefresh = TeamEditSoccer.form.getAttribute('data-url');
+            var parameters = new FormData(fvAsistencia.form);
+            parameters.append('action', 'add_asistencia');
+            let urlrefresh = fvAsistencia.form.getAttribute('data-url');
             submit_formdata_with_ajax('Notificación',
                 '¿Estas seguro de realizar la siguiente acción?',
                 pathname,
                 parameters,
                 function (request) {
-                   //location.href = urlrefresh;
-                   var idTeam = $("#id_SoccerTeam").val();
-                   //console.log(idTeam);
-                   $("#exampleModalPreview-editTeam"+idTeam).modal('hide');
-                   limpiarSoccer();
-                   getDataTeamEditSoccer();
+                    var idTeam = $("#id_training").val();
+                    //console.log(idTeam);
+                    $("#exampleModalPreview-asistencia"+idTeam).modal('hide');
+                   location.reload();
+
                 },
             );
         });
-});
-
-$(function () {
-    console.log("Ingresando a formulario TeamEditSoccer");
 });
