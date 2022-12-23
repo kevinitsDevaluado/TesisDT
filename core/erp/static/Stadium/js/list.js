@@ -21,7 +21,7 @@ function getDataStadium() {
                                     'data-toggle="tooltip"'+
                                     'title="Editar Team"'+
                                     'class="btn btn-success">'+  
-                                        '<div class="small-box bg-'+aleatorio+'">'+
+                                        '<div class="small-box bg-success">'+
                                             '<div class="inner">'+
                                                 '<p class="text-center"><strong>'+ data[i].name +'</strong></p>'+
                                             '</div>'+

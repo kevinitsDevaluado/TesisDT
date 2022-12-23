@@ -19,6 +19,7 @@ from core.erp.models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.erp.forms import *
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from core.erp.models import *
 
 class DetailsGamesListView(CreateView):
     model = DetailsGames
@@ -42,8 +43,8 @@ class DetailsGamesListView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        query = DetailsGames.objects.first()
-        context['list_url'] = reverse_lazy('profile', kwargs={'pk': query.game.teamLocal.sportLeague.id})
+        query = GameFootball.objects.get(id = self.kwargs['pk'])
+        context['list_url'] = reverse_lazy('profile', kwargs={'pk': query.teamLocal.sportLeague.id})
         context['title'] = 'Nuevo'
         context['action'] = 'add'
         return context
