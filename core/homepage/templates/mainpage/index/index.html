@@ -62,6 +62,8 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li class="active"><a href="{% url 'index' %}" class="nav-link">Inicio</a></li>
+                <li><a href="{% if onepage %}#nosotros{% else %}/#nosotros{% endif %}" class="nav-link">Nosotros</a></li>
+                <li><a href="{% if onepage %}#arbitros{% else %}/#arbitros{% endif %}" class="nav-link">Árbitros</a></li>
                 <li><a href="{% if onepage %}#gallery{% else %}/#gallery{% endif %}" class="nav-link">Galería</a></li>
                 <li><a href="{% if onepage %}#news{% else %}/#news{% endif %}" class="nav-link">Noticias</a></li>
                 <li><a href="{% if onepage %}#contact{% else %}/#contact{% endif %}" class="nav-link">Contactos</a></li>
@@ -89,6 +91,93 @@
                   <a href="{% url 'login' %}" class="py-3 px-4 mr-3" style="background:#F5A93C!important; color:azure"> <strong>Iniciar sesión</strong> </a>
               {% endif %}
             </p>  
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Contact-->
+    <div class="site-section" id="nosotros">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 title-section">
+            <h2 class="heading"> {{ mainpage.name }} </h2> <br>
+            <h4 style="color: #F5A93C;">¿Porque estar con nosotros?</h4>
+            <p> {{ mainpage.with_us }} </p>
+            <div class="row">
+              <div class="col-md-6">
+                <h4 style="color: #F5A93C;">Misión</h4>
+                <p>{{ mainpage.mission }}</p>
+              </div>
+              <div class="col-md-6">
+                <h4 style="color: #F5A93C;">Visión</h4>
+                <p>{{ mainpage.vision }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 ml-auto mt-5">
+            <img src="{{ mainpage.get_icon_image }}" alt="" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end Section Contact-->
+
+     <!-- Section Contact-->
+     <div class="site-section" id="arbitros">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 title-section">
+            <h2 class="heading">Nuestros Profesionales</h2>
+          </div>
+          <div class="col-12">
+            <div class="row">
+                <div class="col-12">
+                  <center>
+                    <button class="btn btn-default filter-button" data-filter="all">Todos</button>
+                    <button class="btn btn-default filter-button" data-filter="primera">Primera Categoría</button>
+                    <button class="btn btn-default filter-button" data-filter="primeraA">Árbitros Primera</button>
+                    <button class="btn btn-default filter-button" data-filter="segunda">Segunda Categoría</button>
+                    <button class="btn btn-default filter-button" data-filter="tercera">Tercera Categoría</button>
+                  </center>
+                </div>
+              {% for a in primeraCategoria %}  
+              <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter primera">
+                {% if a.user.image %}
+                <img src=" {{ a.user.image.url }} " class="img-responsive" width="365px" height="365px" alt="">
+                <p class="text-center" style="color: #fff;"> <strong> {{ a.user.last_name }}  {{ a.user.first_name }} </strong> </p> 
+                {% endif %}
+              </div>
+              {% endfor %}
+
+              {% for a in primeraCategoriaA %}  
+              <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter primeraA">
+                {% if a.user.image %}
+                <img src=" {{ a.user.image.url }} " class="img-responsive" width="365px" height="365px" alt="">
+                <p class="text-center" style="color: #fff;"> <strong> {{ a.user.last_name }}  {{ a.user.first_name }} </strong> </p> 
+                {% endif %}
+              </div>
+              {% endfor %}
+
+              {% for a in segunda %}  
+              <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter segunda">
+                {% if a.user.image %}
+                <img src=" {{ a.user.image.url }} " class="img-responsive" width="365px" height="365px" alt="">
+                <p class="text-center" style="color: #fff;"> <strong> {{ a.user.last_name }}  {{ a.user.first_name }} </strong> </p> 
+                {% endif %}
+              </div>
+              {% endfor %}
+
+              {% for a in tercera %}  
+              <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter tercera">
+                {% if a.user.image %}
+                <img src=" {{ a.user.image.url }} " class="img-responsive" width="365px" height="365px" alt="">
+                <p class="text-center" style="color: #fff;"> <strong> {{ a.user.last_name }}  {{ a.user.first_name }} </strong> </p> 
+                {% endif %}
+              </div>
+              {% endfor %}
+              
+            </div>
           </div>
         </div>
       </div>
@@ -210,6 +299,8 @@
             </ul>
           </div>
         </div>
+        <br>
+        
       </div>
     </div>
     <!-- end Section Contact-->
@@ -234,8 +325,6 @@
         </div>
       </div>
     </footer>
-
-
 
   </div>
   <!-- .site-wrap -->
@@ -274,7 +363,35 @@
   <!-- Send Comments-->
   <script src="{% static 'js/functions.js' %}"></script>
   <script src="{% static 'mainpage/js/sendcomments.js' %}"></script>
+  <!-- Gallery -->
+  <script>
+      $(document).ready(function(){
 
+      $(".filter-button").click(function(){
+          var value = $(this).attr('data-filter');
+          
+          if(value == "all")
+          {
+              //$('.filter').removeClass('hidden');
+              $('.filter').show('1000');
+          }
+          else
+          {
+      //            $('.filter[filter-item="'+value+'"]').removeClass('hidden');
+      //            $(".filter").not('.filter[filter-item="'+value+'"]').addClass('hidden');
+              $(".filter").not('.'+value).hide('3000');
+              $('.filter').filter('.'+value).show('3000');
+              
+          }
+      });
+
+      if ($(".filter-button").removeClass("active")) {
+      $(this).removeClass("active");
+      }
+      $(this).addClass("active");
+
+      });
+  </script>
 </body>
 
 </html>

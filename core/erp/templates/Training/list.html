@@ -50,6 +50,10 @@
                         <i class="fa fa-check" aria-hidden="true"></i>
                     </a>
                 {% endif %}
+                <a href="{% url 'verTraining' i.id %}" data-toggle="tooltip" title="Ver Entrenamiento"
+                class="btn btn-dark btn-xs btn-flat">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </a>
                 <a href="{% url 'training_update' i.id %}" data-toggle="tooltip" title="Editar registro"
                 class="btn btn-warning btn-xs btn-flat">
                     <i class="fas fa-edit"></i>

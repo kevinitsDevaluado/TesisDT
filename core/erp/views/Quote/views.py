@@ -79,7 +79,7 @@ class QuoteProfileListView(PermissionMixin, ListView):
                     valor = request.POST['id_price_cuota']
                     query = DebtReferee.objects.get(cuota_id = cuota_id, referee_id = referee_id)
                     if Decimal(valor) <= Decimal(query.price):
-                        model = DebtRepayment()
+                        model = DebtRepayment.objects.get(deuda_id = query.id, deuda__referee_id = referee_id)
                         model.deuda_id = query.id
                         model.price = valor
                         model.save()
@@ -120,9 +120,6 @@ class QuoteCreateView(PermissionMixin, CreateView):
     success_url = reverse_lazy('quote_list')
     permission_required = 'add_quote'
 
-
-   
-
     def post(self, request, *args, **kwargs):
         data = {}
         action = request.POST['action']
@@ -138,6 +135,12 @@ class QuoteCreateView(PermissionMixin, CreateView):
                     asistencia.price = query.price
                     asistencia.referee_id = i.id
                     asistencia.save()
+                    queryDeb = DebtReferee.objects.first()
+                    deb = DebtRepayment()
+                    deb.deuda_id = queryDeb.id
+                    deb.price = 0
+                    deb.save()
+
             else:
                 data['error'] = 'No ha seleccionado ninguna opción'
         except Exception as e:

@@ -8,11 +8,10 @@ from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView, UpdateView, FormView
-
+from django.db.models import Q
 from core.homepage.forms import *
 from core.security.mixins import PermissionMixin
-
-
+from core.erp.models import *
 class MainPageIndexView(TemplateView):
     template_name = 'mainpage/index/index.html'
 
@@ -45,6 +44,10 @@ class MainPageIndexView(TemplateView):
         context['gallery'] = Gallery.objects.filter(state=True).order_by('id')
         context['team'] = Team.objects.filter(state=True).order_by('id')
         context['qualities'] = Qualities.objects.filter(state=True).order_by('id')
+        context['primeraCategoria'] = Referee.objects.filter(typeReferee = "Primera Categoría").order_by('id')
+        context['primeraCategoriaA'] = Referee.objects.filter(Q(typeReferee = "Árbitros primera A") | Q(typeReferee = "Árbitros primera B")).order_by('id')
+        context['segunda'] = Referee.objects.filter(typeReferee = "Segunda Categoría").order_by('id')
+        context['tercera'] = Referee.objects.filter(typeReferee = "Tercera Categoría").order_by('id')
         context['form'] = CommentsForm()
         context['onepage'] = True
         return context

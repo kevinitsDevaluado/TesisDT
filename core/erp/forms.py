@@ -242,9 +242,13 @@ class RefereeForm(ModelForm):
 
     class Meta:
         model = Referee
-        fields = 'first_name', 'last_name', 'dni', 'email', 'gender', 'mobile', 'phone', 'birthdate', 'address', 'curriculum'
+        fields = 'first_name', 'last_name', 'dni', 'email', 'gender', 'mobile', 'phone', 'birthdate', 'address', 'curriculum', 'typeReferee'
         widgets = {
             'gender': forms.Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%;'
+            }),
+             'typeReferee': forms.Select(attrs={
                 'class': 'form-control select2',
                 'style': 'width: 100%;'
             }),

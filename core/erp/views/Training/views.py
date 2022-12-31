@@ -1,4 +1,6 @@
 import json
+from django.http import JsonResponse, HttpResponse
+from decimal import Decimal
 
 from django.http import HttpResponse
 from django.urls import reverse_lazy
@@ -147,4 +149,50 @@ class TrainingDeleteView(PermissionMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Notificación de eliminación'
         context['list_url'] = self.success_url
+        return context
+
+
+class TrainingProfileListView(PermissionMixin, ListView):
+    model = TrainingAssistance
+    template_name = 'Training/listProfile.html'
+    permission_required = 'view_quote'
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('verTraining', kwargs={'pk': pk})
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        action = request.POST['action']
+        try:
+            if action == 'add_asistencia':
+                with transaction.atomic():
+                    id_training = request.POST['id_training']
+                    check = request.POST.getlist('checks[]') 
+                    for u in check:
+                        asis = TrainingAssistance.objects.get(training_id = id_training,referee_id = u)
+                        asis.asistencia = True
+                        asis.save()
+                    training = Training.objects.get(id=id_training)
+                    training.state = False
+                    training.save()
+            elif action == 'searchListAsistencia':
+                with transaction.atomic():
+                    data = []
+                    search = TrainingAssistance.objects.filter(training_id = self.kwargs['pk'])
+                    pos = 1
+                    for m in search.order_by('id'):
+                        item = m.toJSON()
+                        item['pos'] = pos
+                        data.append(item)
+                        pos += 1
+            else:
+                data['error'] = 'No ha seleccionado ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return HttpResponse(json.dumps(data), content_type='application/json')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Asistencias'
         return context

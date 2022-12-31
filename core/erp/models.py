@@ -127,6 +127,7 @@ class Referee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     gender = models.CharField(max_length=10, choices=gender_person, default=gender_person[0][0], verbose_name='Sexo')
     mobile = models.CharField(max_length=10, unique=True, verbose_name='Teléfono celular')
+    typeReferee = models.CharField(max_length=200, choices=type_referee, default=type_referee[0][0], verbose_name='Tipo de Árbitro')
     phone = models.CharField(max_length=10, null=True, blank=True, verbose_name='Teléfono convencional')
     address = models.CharField(max_length=500, null=True, blank=True, verbose_name='Dirección')
     birthdate = models.DateField(default=datetime.now, verbose_name='Fecha de nacimiento')
@@ -171,6 +172,7 @@ class GameFootball(models.Model):
     hourGame = models.TimeField(default=datetime.now().strftime("%H:%M"), verbose_name='Hora del Partido')
     desc = models.CharField(max_length=500, null=True, blank=True, verbose_name='Descripción')
     price = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+    typeOfGame = models.CharField(max_length=200, choices=type_game, default=type_game[0][0], verbose_name='Tipo de Encuentro')
     state = models.BooleanField(default=True, verbose_name='Estado')
 
     def __str__(self):

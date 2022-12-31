@@ -81,6 +81,7 @@ class RefereeCreateView(PermissionMixin, CreateView):
                     referee = Referee()
                     referee.user_id = user.id
                     referee.gender = request.POST['gender']
+                    referee.typeReferee = request.POST['typeReferee']
                     referee.mobile = request.POST['mobile']
                     referee.phone = request.POST['phone']
                     referee.address = request.POST['address']
@@ -171,12 +172,11 @@ class RefereeUpdateView(PermissionMixin, UpdateView):
                     Referee = instance
                     Referee.user_id = user.id
                     Referee.gender = request.POST['gender']
+                    Referee.typeReferee = request.POST['typeReferee']
                     Referee.mobile = request.POST['mobile']
                     Referee.phone = request.POST['phone']
                     Referee.address = request.POST['address']
                     Referee.birthdate = request.POST['birthdate']
-                    Referee.parish_id = int(request.POST['parish'])
-                    Referee.profession_id = int(request.POST['profession'])
                     if 'curriculum-clear' in request.POST:
                         Referee.remove_curriculum()
                         Referee.curriculum = None

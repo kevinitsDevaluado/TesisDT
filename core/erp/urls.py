@@ -25,6 +25,8 @@ urlpatterns = [
     path('Training/add/', TrainingCreateView.as_view(), name='training_create'),
     path('Training/update/<int:pk>/', TrainingUpdateView.as_view(), name='training_update'),
     path('Training/delete/<int:pk>/', TrainingDeleteView.as_view(), name='training_delete'),
+    path('Training/Profile/<int:pk>/', TrainingProfileListView.as_view(), name='verTraining'),
+
     # Cuota
     path('Quote/', QuoteListView.as_view(), name='quote_list'),
     path('Quote/add/', QuoteCreateView.as_view(), name='quote_create'),

@@ -48,4 +48,3 @@ class DetailsGamesListView(CreateView):
         context['title'] = 'Nuevo'
         context['action'] = 'add'
         return context
-
