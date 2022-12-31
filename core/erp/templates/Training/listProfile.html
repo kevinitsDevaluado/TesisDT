@@ -1,0 +1,29 @@
+{% extends 'list.html' %}
+{% load static %}
+{% block head_list %}
+  {% include 'librays.html' %} 
+  <script src="{% static 'Training/js/list.js' %}"></script>
+{% endblock %}
+
+{% block content_list %}
+
+<table class="table table-bordered table-striped" id="dataAsistenciaList">
+    <thead class="thead-info">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombres Completos</th>
+        <th scope="col" class="text-center">Asistencia</th>
+      </tr>
+    </thead>
+  </table>
+{% endblock %}
+
+<!--Block box footer buttons-->
+{% block box_footer_buttons %}
+    <a href="{% url 'training_list' %}" class="btn btn-primary btn-flat">
+        <i class="fas fa-sync-alt"></i> Regresar
+    </a>
+    <a href="{{ list_url }}" class="btn btn-success btn-flat">
+        <i class="fas fa-sync-alt"></i> Actualizar
+    </a>
+{% endblock %}

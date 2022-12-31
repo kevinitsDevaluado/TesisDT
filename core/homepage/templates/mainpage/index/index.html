@@ -62,6 +62,8 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li class="active"><a href="{% url 'index' %}" class="nav-link">Inicio</a></li>
+                <li><a href="{% if onepage %}#nosotros{% else %}/#nosotros{% endif %}" class="nav-link">Nosotros</a></li>
+                <li><a href="{% if onepage %}#arbitros{% else %}/#arbitros{% endif %}" class="nav-link">Árbitros</a></li>
                 <li><a href="{% if onepage %}#gallery{% else %}/#gallery{% endif %}" class="nav-link">Galería</a></li>
                 <li><a href="{% if onepage %}#news{% else %}/#news{% endif %}" class="nav-link">Noticias</a></li>
                 <li><a href="{% if onepage %}#contact{% else %}/#contact{% endif %}" class="nav-link">Contactos</a></li>
@@ -94,39 +96,87 @@
       </div>
     </div>
 
-    
-    
-    <div class="container">
-      
-
-      <div class="row">
-        <div class="col-lg-12">
-          
-          <div class="d-flex team-vs">
-            <span class="score">4-1</span>
-            <div class="team-1 w-50">
-              <div class="team-details w-100 text-center">
-                <img src="{% static 'mainpage/index/images/logo_1.png' %}" alt="Image" class="img-fluid">
-                <h3>LA LEGA <span>(win)</span></h3>
-                <ul class="list-unstyled">
-                  <li>Anja Landry (7)</li>
-                  <li>Eadie Salinas (12)</li>
-                  <li>Ashton Allen (10)</li>
-                  <li>Baxter Metcalfe (5)</li>
-                </ul>
+    <!-- Section Contact-->
+    <div class="site-section" id="nosotros">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 title-section">
+            <h2 class="heading"> {{ mainpage.name }} </h2> <br>
+            <h4 style="color: #F5A93C;">¿Porque estar con nosotros?</h4>
+            <p> {{ mainpage.with_us }} </p>
+            <div class="row">
+              <div class="col-md-6">
+                <h4 style="color: #F5A93C;">Misión</h4>
+                <p>{{ mainpage.mission }}</p>
+              </div>
+              <div class="col-md-6">
+                <h4 style="color: #F5A93C;">Visión</h4>
+                <p>{{ mainpage.vision }}</p>
               </div>
             </div>
-            <div class="team-2 w-50">
-              <div class="team-details w-100 text-center">
-                <img src="{% static 'mainpage/index/images/logo_2.png' %}" alt="Image" class="img-fluid">
-                <h3>JUVENDU <span>(loss)</span></h3>
-                <ul class="list-unstyled">
-                  <li>Macauly Green (3)</li>
-                  <li>Arham Stark (8)</li>
-                  <li>Stephan Murillo (9)</li>
-                  <li>Ned Ritter (5)</li>
-                </ul>
+          </div>
+          <div class="col-lg-4 ml-auto mt-5">
+            <img src="{{ mainpage.get_icon_image }}" alt="" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end Section Contact-->
+
+     <!-- Section Contact-->
+     <div class="site-section" id="arbitros">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 title-section">
+            <h2 class="heading">Nuestros Profesionales</h2>
+          </div>
+          <div class="col-12">
+            <div class="row">
+                <div class="col-12">
+                  <center>
+                    <button class="btn btn-default filter-button" data-filter="all">Todos</button>
+                    <button class="btn btn-default filter-button" data-filter="primera">Primera Categoría</button>
+                    <button class="btn btn-default filter-button" data-filter="primeraA">Árbitros Primera</button>
+                    <button class="btn btn-default filter-button" data-filter="segunda">Segunda Categoría</button>
+                    <button class="btn btn-default filter-button" data-filter="tercera">Tercera Categoría</button>
+                  </center>
+                </div>
+              {% for a in primeraCategoria %}  
+              <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter primera">
+                {% if a.user.image %}
+                <img src=" {{ a.user.image.url }} " class="img-responsive" width="365px" height="365px" alt="">
+                <p class="text-center" style="color: #fff;"> <strong> {{ a.user.last_name }}  {{ a.user.first_name }} </strong> </p> 
+                {% endif %}
               </div>
+              {% endfor %}
+
+              {% for a in primeraCategoriaA %}  
+              <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter primeraA">
+                {% if a.user.image %}
+                <img src=" {{ a.user.image.url }} " class="img-responsive" width="365px" height="365px" alt="">
+                <p class="text-center" style="color: #fff;"> <strong> {{ a.user.last_name }}  {{ a.user.first_name }} </strong> </p> 
+                {% endif %}
+              </div>
+              {% endfor %}
+
+              {% for a in segunda %}  
+              <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter segunda">
+                {% if a.user.image %}
+                <img src=" {{ a.user.image.url }} " class="img-responsive" width="365px" height="365px" alt="">
+                <p class="text-center" style="color: #fff;"> <strong> {{ a.user.last_name }}  {{ a.user.first_name }} </strong> </p> 
+                {% endif %}
+              </div>
+              {% endfor %}
+
+              {% for a in tercera %}  
+              <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter tercera">
+                {% if a.user.image %}
+                <img src=" {{ a.user.image.url }} " class="img-responsive" width="365px" height="365px" alt="">
+                <p class="text-center" style="color: #fff;"> <strong> {{ a.user.last_name }}  {{ a.user.first_name }} </strong> </p> 
+                {% endif %}
+              </div>
+              {% endfor %}
+              
             </div>
           </div>
         </div>
@@ -168,133 +218,6 @@
 
       </div>
     </div>
-    
-    <div class="site-section bg-dark">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="widget-next-match">
-              <div class="widget-title">
-                <h3>Partidos</h3>
-              </div>
-              <div class="widget-body mb-3">
-                <div class="widget-vs">
-                  <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
-                    <div class="team-1 text-center">
-                      <img src="{% static 'mainpage/index/images/logo_1.png' %}" alt="Image">
-                      <h3>Equipos</h3>
-                    </div>
-                    <div>
-                      <span class="vs"><span>VS</span></span>
-                    </div>
-                    <div class="team-2 text-center">
-                      <img src="{% static 'mainpage/index/images/logo_2.png' %}" alt="Image">
-                      <h3>Soccer</h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="text-center widget-vs-contents mb-4">
-                <h4>World Cup League</h4>
-                <p class="mb-5">
-                  <span class="d-block">December 20th, 2020</span>
-                  <span class="d-block">9:30 AM GMT+0</span>
-                  <strong class="text-primary">New Euro Arena</strong>
-                </p>
-
-                <div id="date-countdown2" class="pb-1"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            
-            <div class="widget-next-match">
-              <table class="table custom-table">
-                <thead>
-                  <tr>
-                    <th>P</th>
-                    <th>Team</th>
-                    <th>W</th>
-                    <th>D</th>
-                    <th>L</th>
-                    <th>PTS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td><strong class="text-white">Football League</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td><strong class="text-white">Soccer</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td><strong class="text-white">Juvendo</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td><strong class="text-white">French Football League</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td><strong class="text-white">Legia Abante</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>6</td>
-                    <td><strong class="text-white">Gliwice League</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>7</td>
-                    <td><strong class="text-white">Cornika</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>8</td>
-                    <td><strong class="text-white">Gravity Smash</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div> 
-
     <!--Section in the News-->
     <div class="site-section" id="news">
       <div class="container">
@@ -376,6 +299,8 @@
             </ul>
           </div>
         </div>
+        <br>
+        
       </div>
     </div>
     <!-- end Section Contact-->
@@ -400,8 +325,6 @@
         </div>
       </div>
     </footer>
-
-
 
   </div>
   <!-- .site-wrap -->
@@ -440,7 +363,35 @@
   <!-- Send Comments-->
   <script src="{% static 'js/functions.js' %}"></script>
   <script src="{% static 'mainpage/js/sendcomments.js' %}"></script>
+  <!-- Gallery -->
+  <script>
+      $(document).ready(function(){
 
+      $(".filter-button").click(function(){
+          var value = $(this).attr('data-filter');
+          
+          if(value == "all")
+          {
+              //$('.filter').removeClass('hidden');
+              $('.filter').show('1000');
+          }
+          else
+          {
+      //            $('.filter[filter-item="'+value+'"]').removeClass('hidden');
+      //            $(".filter").not('.filter[filter-item="'+value+'"]').addClass('hidden');
+              $(".filter").not('.'+value).hide('3000');
+              $('.filter').filter('.'+value).show('3000');
+              
+          }
+      });
+
+      if ($(".filter-button").removeClass("active")) {
+      $(this).removeClass("active");
+      }
+      $(this).addClass("active");
+
+      });
+  </script>
 </body>
 
 </html>

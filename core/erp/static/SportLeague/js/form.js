@@ -17,28 +17,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
                 }),
             },
             fields: {
-                estudiante: {
+                name: {
                     validators: {
                         notEmpty: {
-                            message: 'Debe elegir al menos un estudiante..'
+                            message: 'Ingrese el Nombre de la liga ..'
                         },
-                        
-                        remote: {
-                            url: pathname,
-                            data: function () {
-                                return {
-                                
-                                    obj: form.querySelector('[name="estudiante"]').value,
-                                    type: 'estudiante',
-                                    action: 'validate_data'
-                                };
-                            },
-                            message: 'El estudiante ya se encuentra matriculado en este curso',
-                            method: 'POST',
-                            headers: {
-                                'X-CSRFToken': csrftoken
-                            },
-                        }
                     }
                 },
             }
@@ -90,15 +73,10 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
 $(function () {
 
-    $('.select2').select2({
-        placeholder: 'Buscar..',
-        language: 'es',
-        theme: 'bootstrap4'
-    });
+   
 
     $('select[name="estudiante"]').on('change', function (e) {
         fvSportLeague.revalidateField('estudiante');
     });
 
-    console.log("Ingresando a formulario");
 });

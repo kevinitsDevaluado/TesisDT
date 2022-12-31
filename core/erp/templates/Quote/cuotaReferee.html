@@ -1,0 +1,50 @@
+{% load static %}
+{% load widget_tweaks %}
+<!-- Modal Crear Liga -->
+<div class="modal fade right" id="exampleModalPreview-cuota{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog momodel modal-fluid" role="document">
+        <div class="modal-content modal-content ">
+            <div class=" modal-header   modal-header text-center">
+                <h5 class="modal-title w-50" id="exampleModalPreviewLabel"> Cuota </h5>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                    <span style="font-size: 1.3em;" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" method="post" enctype="multipart/form-data" id="frmAddAsistencia">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <input type="text" id="id_quota" name="id_quota" value=" {{ i.id }} " style="display: none">
+                    <input type="text" id="id_price" name="id_price" class="form-control">
+                    
+                </div>
+                <div class="modal-header">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Aceptar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="application/javascript">
+    var table;
+    $(function () {
+        table = $('#dataAsistencia').DataTable({
+            responsive: true,
+            autoWidth: false,
+            destroy: true,
+            initComplete: function (settings, json) {
+
+            }
+        });
+
+        $('.table')
+            .on('draw', function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            })
+            .on('click', 'img', function () {
+                var src = $(this).attr('src');
+                load_image(src);
+            });
+    });
+</script>

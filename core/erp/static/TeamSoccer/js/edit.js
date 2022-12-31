@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
                 function (request) {
                    //location.href = urlrefresh;
                    var idTeam = $("#id_SoccerTeam").val();
-                   console.log(idTeam);
+                   //console.log(idTeam);
                    $("#exampleModalPreview-editTeam"+idTeam).modal('hide');
                    limpiarSoccer();
                    getDataTeamEditSoccer();
